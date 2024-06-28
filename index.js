@@ -1,32 +1,5 @@
-import express from "express";
-import bodyParser from "body-parser";
-
-const app = express();
-const port = 3000;
-const masterKey = "4VGP2DN-6EWM4SJ-N6FGRHV-Z3PR3TT";
-
-app.use(bodyParser.urlencoded({ extended: true }));
-
-//1. GET a random joke
-
-//2. GET a specific joke
-
-//3. GET a jokes by filtering on the joke type
-
-//4. POST a new joke
-
-//5. PUT a joke
-
-//6. PATCH a joke
-
-//7. DELETE Specific joke
-
-//8. DELETE All jokes
-
-app.listen(port, () => {
-  console.log(`Successfully started server on port ${port}.`);
-});
-
+import db from './databaseconnection.js';
+// insertion of jokes into the database
 var jokes = [
   {
     id: 1,
@@ -599,3 +572,18 @@ var jokes = [
     jokeType: "Food",
   },
 ];
+
+for(const joke of jokes){
+  const jokeid=joke.id;
+  const joketype=joke.jokeType;
+  const jokee=joke.jokeText;
+
+  const query  = "INSERT INTO jokes (idjokes,jokestype,jokes) VALUES(?,?,?)"
+  
+  db.query(query,[jokeid,joketype,jokee],(err,results)=>{
+    if(err){
+      console.log(err);
+    }
+    console.log("succees insterted 1 row to the database");
+  });
+};
